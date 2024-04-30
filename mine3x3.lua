@@ -91,7 +91,22 @@ end
 
 -- this function places a torch behind the starting point
 function placeTorch(i)
-	local currentSlotIndex = i
+    local currentSlotIndex = i
+	-- this will return the function early if slot finding
+	-- is already complete
+    if torchPosition > 1 then
+		local itemDetailEarly = turtle.getItemDetail(torchPosition)
+		if itemDetailEarly and itemDetailEarly.name == "minecraft:torch"
+		then
+			turtle.select(torchPosition)
+			turtle.turnRight()
+			turtle.turnRight()
+			turtle.place()
+			turtle.turnRight()
+			turtle.turnRight()
+			return
+		end
+    end
 	turtle.select(currentSlotIndex)
     local itemDetail = turtle.getItemDetail(currentSlotIndex)
     if itemDetail and itemDetail.name == "minecraft:torch" 
